@@ -1,3 +1,7 @@
 ROLES=('admin','operator','viewer')
 STATUSES=('queued','running','completed','failed')
 OPERATORS=('scan','filter','hash_join','group')
+# 时态账本覆盖的三类业务实体：采样(datasets)、计划(plans)、剖面(traces)
+LEDGER_ENTITIES=('dataset','plan','trace')
+# 账本状态：建账中(回填旧数据) → 可查(允许创建课堂标记)
+LEDGER_STATES=('building','ready')

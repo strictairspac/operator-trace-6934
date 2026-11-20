@@ -5,3 +5,20 @@
 .workspace{background-image:linear-gradient(oklch(80% .015 90 / .18) 1px,transparent 1px),linear-gradient(90deg,oklch(80% .015 90 / .18) 1px,transparent 1px);background-size:28px 28px}.sidebar{background:oklch(25% .018 90)}.sidebar nav button.active{background:oklch(34% .027 85);border-color:oklch(73% .1 80)}.sidebar .identity{border-color:oklch(43% .02 90)}.code-input{font-family:'Space Mono',monospace;font-size:10px;line-height:1.7;min-height:280px}.pipeline-mini{display:flex;gap:5px;align-items:center;flex-wrap:wrap;font-family:'Space Mono',monospace;font-size:9px}.pipeline-mini span{background:oklch(84% .04 85);padding:5px}.operator-strip{display:flex;gap:1px;background:var(--line);margin-bottom:30px;border:1px solid var(--line)}.operator-strip>div{flex:1;background:var(--paper);padding:18px}.operator-strip span{display:block;font-family:'Space Mono',monospace;font-size:10px;color:var(--rust)}.operator-strip b{display:block;font-family:'Space Mono',monospace;font-size:22px;margin:12px 0}.operator-strip small{color:var(--muted)}details{margin-bottom:15px}summary{cursor:pointer;font-family:'Space Mono',monospace;font-size:12px;padding:10px 0;border-top:1px solid var(--line)}.operator-glyph{display:flex;align-items:center;gap:12px;margin-top:55px;font-family:'Space Mono',monospace;font-size:12px}.operator-glyph i{font-style:normal;border:1px solid oklch(78% .07 80);padding:15px}.login-art{background:oklch(29% .023 90)}.login-art h1{font-weight:400}.evidence pre{background:oklch(86% .025 90)}@media(max-width:767px){.operator-strip{display:grid;grid-template-columns:1fr 1fr}.operator-strip b{font-size:18px}.operator-glyph{display:none}}
 .evidence>section,.split>section,.operator-strip>div{min-width:0}.result-head h2{overflow-wrap:anywhere}pre{max-width:100%}details{min-width:0}
 .evidence p{overflow-wrap:anywhere}
+
+/* 时态账本：状态横幅、标记现场、分页器 */
+.ledger-banner{display:flex;justify-content:space-between;gap:24px;border-top:3px solid var(--rust);padding:20px 22px;margin-bottom:28px;background:oklch(88% .035 150 / .55);align-items:flex-start;flex-wrap:wrap}
+.ledger-banner.building{background:oklch(87% .06 80 / .55)}
+.ledger-banner h2{margin:8px 0 6px}
+.ledger-banner .note{margin-top:0;max-width:340px}
+.markers-view .scene-panel{border-top:3px solid var(--rust);padding-top:22px;margin-top:34px}
+.tabs{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}
+.tabs .tab.active{background:var(--rust);color:var(--light);border-color:var(--rust)}
+.tabs em{margin-left:6px}
+.pager{display:flex;align-items:center;gap:16px;margin-top:22px;flex-wrap:wrap}
+.pager small{font-family:'Space Mono',monospace;color:var(--muted)}
+.scene-detail{border:1px solid var(--line);background:var(--light);padding:18px;margin-top:26px}
+.scene-detail h3{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.scene-detail h3 small{color:var(--muted);font-weight:400}
+.scene-detail pre{max-height:420px}
+@media(max-width:767px){.ledger-banner{display:block}.pager{gap:10px}}

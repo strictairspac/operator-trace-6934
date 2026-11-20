@@ -3,10 +3,15 @@ from src.models.identity import User,Audit
 from src.models.dataset import Dataset
 from src.models.plan import Plan
 from src.models.trace import Trace
+from src.models.ledger import LedgerState
 from src.utils.security import hash_password
+from src.services.ledger import ensure_ledger, backfill_gaps, get_state
 DEFAULT_STEPS=[{'op':'scan','source':'readings'},{'op':'filter','field':'value','compare':'gte','value':50},{'op':'hash_join','right':'sensors','left_key':'sensor_id','right_key':'sensor_id'},{'op':'group','keys':['zone'],'measure':'value','aggregate':'avg'}]
 def seed():
  Base.metadata.create_all(engine)
+ ensure_ledger()
+ with Session() as s:
+  if s.get(LedgerState,1) is None:s.add(LedgerState(id=1,state='building'));s.commit()
  with Session() as s:
   for role in ('admin','operator','viewer'):
    if not s.query(User).filter_by(email=role+'@operator.local').first():s.add(User(email=role+'@operator.local',role=role,password=hash_password('Trace2026!')))
@@ -19,5 +24,13 @@ def seed():
   for i,(name,_,_,_) in enumerate(seeds):
    pname=['过滤-连接-分组基线','空输入管线','重复键内连接'][i]
    if not s.query(Plan).filter_by(name=pname).first():s.add(Plan(name=pname,dataset_id=s.query(Dataset).filter_by(name=name).one().id,steps=DEFAULT_STEPS,note='受限DSL，Python算子真实执行'))
-  s.commit();counts={m.__tablename__:s.query(m).count() for m in (User,Dataset,Plan,Trace)};print(counts);return counts
+  s.commit()
+ # 种子行同样进入时态账本：补写所有缺版本的行（小事务、幂等、可与在线写入并发）
+ gaps=backfill_gaps()
+ if any(gaps.values()):print('ledger gap backfill:',gaps)
+ with Session() as s:
+  state=get_state(s)
+  counts={m.__tablename__:s.query(m).count() for m in (User,Dataset,Plan,Trace)}
+ print('ledger state:',state,counts)
+ return counts
 if __name__=='__main__':seed()
